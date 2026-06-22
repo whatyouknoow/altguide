@@ -84,8 +84,24 @@ def test_bom_errors(temp_bom_dir, test_file, expected_error):
     """Параметризованный тест для различных ошибок в BOM"""
     test_file_path = os.path.join(TEST_DATA_DIR, test_file)
     success, output = run_bom_check(test_file_path, temp_bom_dir)
-    
+
     assert not success, f"Ожидалась ошибка, но проверка прошла успешно"
+    assert expected_error in output, f"Ожидаемая ошибка '{expected_error}' не найдена в выводе: {output}"
+
+
+# Тесты на дублирование значений
+@pytest.mark.parametrize("test_file,col_name,expected_error", [
+    ("Bill of Materials-duplicate_part.csv", "Part", "дублирующееся значение 'CC0603JPX7R9BB104' в столбце 'Part'"),
+    ("Bill of Materials-duplicate_alt_part.csv", "Alternative Part", "дублирующееся значение 'C100nF' в столбце 'Alternative Part'"),
+    ("Bill of Materials-duplicate_jlcpcb_part.csv", "JLCPCB Part", "дублирующееся значение 'C100nF' в столбце 'JLCPCB Part'"),
+    ("Bill of Materials-duplicate_multiple.csv", "Part", "дублирующееся значение 'CC0603JPX7R9BB104' в столбце 'Part'"),
+])
+def test_bom_duplicate_values(temp_bom_dir, test_file, col_name, expected_error):
+    """Тест на дублирование значений в столбцах Part, Alternative Part, JLCPCB Part"""
+    test_file_path = os.path.join(TEST_DATA_DIR, test_file)
+    success, output = run_bom_check(test_file_path, temp_bom_dir)
+
+    assert not success, f"Ожидалась ошибка дублирования, но проверка прошла успешно"
     assert expected_error in output, f"Ожидаемая ошибка '{expected_error}' не найдена в выводе: {output}"
 
 

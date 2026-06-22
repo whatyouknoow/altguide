@@ -1,0 +1,5 @@
+"Description","Comment","Designator","Footprint","Part","Alternative Part","JLCPCB Part","Quantity"
+"","","","","","","",""
+"Capacitor","100nF","C1","C_0603","CC0603JPX7R9BB104","","CC0603JPX7R9BB104","1"
+"Resistor","10k","R1","R_0603","CC0603JPX7R9BB104","",KP-3216SGD,"1"
+"LED","Green","D1","LED_1206","KP-3216SGD","","KP-3216SGD","1"
